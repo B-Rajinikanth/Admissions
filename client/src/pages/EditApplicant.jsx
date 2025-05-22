@@ -12,14 +12,59 @@ const EditApplicant = () => {
 
     const {id} = useParams()
 
+    
+
     const handleSave = ()=> {
+        const interMarks = Number(applicant.interMarks);
+        const eapcetRank = Number(applicant.eapcetRank);
+        const sucetMarks = Number(applicant.sucetMarks);
+
+        let interWeight = 0, eapcetWeight = 0, sucetWeight = 0, meritScore = 0, fee = 0;
+
+        // Calculate weightages
+        if (interMarks >= 780) interWeight = 100;
+        else if (interMarks >= 720) interWeight = 80;
+        else if (interMarks >= 660) interWeight = 40;
+        else if (interMarks >= 520) interWeight = 20;
+
+        if (eapcetRank >= 1 && eapcetRank <= 8000) eapcetWeight = 100;
+        else if (eapcetRank <= 25000) eapcetWeight = 80;
+        else if (eapcetRank <= 50000) eapcetWeight = 60;
+        else if (eapcetRank <= 90000) eapcetWeight = 40;
+        else if (eapcetRank <= 120000) eapcetWeight = 20;
+
+        if (sucetMarks >= 16 && sucetMarks <= 25) sucetWeight = 80;
+        else if (sucetMarks >= 6) sucetWeight = 40;
+        else if (sucetMarks >= 0 && sucetMarks <= 5) sucetWeight = 100;
+
+        // Calculate merit score
+        meritScore = (interWeight / 100 * 10) + (eapcetWeight / 100 * 80) + (sucetWeight / 100 * 10);
+
+        // Fee calculation
+        if (interMarks < 500) fee = 450000;
+        else if (meritScore >= 90) fee = 125000;
+        else if (meritScore >= 75.2) fee = 150000;
+        else if (meritScore >= 59.4) fee = 230000;
+        else if (meritScore >= 43.64) fee = 290000;
+        else if (meritScore >= 27.82) fee = 350000;
+        else if (meritScore >= 13.0) fee = 400000;
+
+        // Final object to update
+        const updatedApplicant = {
+            ...applicant,
+            feePayable: fee,
+        };
+
+        // Update backend
         axios
-            .put(`http://localhost:5555/applicants/${id}`, applicant)
-            .then(()=>{
-                alert('Applicant updated successfully!') 
-                navigate('/view-all') 
+            .put(`http://localhost:5555/applicants/${id}`, updatedApplicant)
+            .then(() => {
+                alert('Applicant updated successfully!');
+                navigate('/view-all');
             })
-            .catch((error)=>{ console.error(`Server Error: ${error.message}`) })
+            .catch((error) => {
+                console.error(`Server Error: ${error.message}`);
+            });
     }
 
 

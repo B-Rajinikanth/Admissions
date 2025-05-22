@@ -14,6 +14,7 @@ const EntryForm = () => {
         interMarks: 0,
         eapcetRank: 0,
         sucetMarks: 0,
+        feePayable: 0,
         remarks: ""
     })
 

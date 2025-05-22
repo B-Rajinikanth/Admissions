@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 // import { Link, useNavigate } from 'react-router-dom'
 
 const DisplayAll = () => {
+
+    const navigate = useNavigate();
 
     const [allApplicants, setAllApplicants] = useState([])
 
@@ -39,6 +41,20 @@ const DisplayAll = () => {
           });
       };
 
+      const printValidate = (applicant) => {
+            if(applicant.applicationNumber === 0 || applicant.sucetMarks === 0) {
+                    alert('Please update Application number and SUCET Marks to print allotment Order!')
+                    navigate(`/edit/${applicant._id}`)
+            } else 
+                navigate(`/allotment/${applicant._id}`)
+      }
+
+      const formattedDate = (isoDate )=> {
+            const date = new Date(isoDate);
+            const res = `${String(date.getDate()).padStart(2, '0')}-${String(date.getMonth() + 1).padStart(2, '0')}-${date.getFullYear()}, ${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+            return res
+      }
+
 
   return (
     <>
@@ -57,6 +73,7 @@ const DisplayAll = () => {
                             <th className='text-start p-3 text-gray-600'>Inter Marks</th>
                             <th className='text-start p-3 text-gray-600'>EAPCET Rank</th>
                             <th className='text-start p-3 text-gray-600'>SUCET Marks</th>
+                            <th className='text-start p-3 text-gray-600'>Date of Entry</th>
                             <th className='text-start p-3 text-gray-600'>Action</th>
                         </tr>
                     </thead>
@@ -71,10 +88,11 @@ const DisplayAll = () => {
                                     <td className='text-start px-3'>{applicant.interMarks}</td>
                                     <td className='text-start px-3'>{applicant.eapcetRank}</td>
                                     <td className='text-start px-3'>{applicant.sucetMarks}</td>
+                                    <td className='text-start px-3'>{formattedDate(applicant.createdAt)}</td>
                                     <td className='text-start px-3'>
-                                        <Link to={`/edit/${applicant._id}`} className='bg-yellow-500 rounded px-4 py-1 mx-1 text-green-50 cursor-pointer'><i className="fa-solid fa-pen-to-square"></i></Link>
-                                        <button onClick={() => handleDelete(applicant._id)} className='bg-red-600 rounded px-4 py-1 mx-1 text-green-50 cursor-pointer'><i className="fa-solid fa-trash"></i></button>
-                                        <Link to={`/allotment/${applicant._id}`} className='invisible xl:visible bg-green-600 rounded px-4 py-1 mx-1 text-green-50 cursor-pointer'><i className="fa-solid fa-print"></i></Link>
+                                        <Link to={`/edit/${applicant._id}` } className='bg-yellow-500 rounded px-4 py-1 mx-1 text-green-50 cursor-pointer'><i className="fa-solid fa-pen-to-square"></i></Link>
+                                        <button onClick={ () => handleDelete(applicant._id) } className='bg-red-600 rounded px-4 py-1 mx-1 text-green-50 cursor-pointer'><i className="fa-solid fa-trash"></i></button>
+                                        <button onClick={ ()=> printValidate(applicant) } className='invisible xl:visible bg-green-600 rounded px-4 py-1 mx-1 text-green-50 cursor-pointer'><i className="fa-solid fa-print"></i></button>
                                     </td>
                                 </tr>
                             ))

@@ -8,6 +8,7 @@ import signature from '../assets/srinivar_sign.png'
 const AllotmentOrderPage = () => {
 
     const [totalFee, setTotalFee] = useState(450000)
+    
 
     const getTwoDigits = (n)=> {
         if(n < 10)
@@ -26,6 +27,7 @@ const AllotmentOrderPage = () => {
     const {id} = useParams()
 
     useEffect(()=>{
+
         axios
             .get(`http://localhost:5555/applicants/${id}`)
             .then((response) => {
@@ -49,6 +51,7 @@ const AllotmentOrderPage = () => {
         return `${day}-${month}-${year}`;
     }
 
+
   return (
     <>
         <div className="w-full px-5 flex flex-row justify-between items-start">
@@ -71,32 +74,32 @@ const AllotmentOrderPage = () => {
             <p className='text-justify'>We are happy to offer you a provisional admission to the <span className="font-bold">B. Tech program</span> at Sreenidhi University for the academic year <span className="font-bold">2025-2026</span>, based on your commendable performance in <span className="font-bold">SUCET / EAMCET / JEE / and 10+2 examinations</span>.</p>
             <p className="font-bold mt-3">Offered Program Options (as per your academic merit and preferences) will be in the attached annexure.</p>
             <p className="font-bold mt-3">Special Merit Scholarship:</p>
-            <p className='text-justify'>We are pleased to inform you that the <span className="font-bold">annual tuition fee</span> for your program is <span className="font-bold text-blue-600">Rs. 4,50,000/-</span>. Based on the evaluation of your academic performance and qualifying examination scores, you have been awarded a <span className="font-bold">Special Merit Scholarship of <span className="text-blue-600">Rs. {totalFee}/-</span></span>. <span className="font-bold">Congratulations on this achievement!</span> The scholarship amount will be <span className="font-bold">adjusted against your annual tuition fee</span> as per the university’s rules and regulations and the net payable annual fee will be <span className="font-bold text-blue-600">Rs. {totalFee}/-</span></p>
+            <p className='text-justify'>We are pleased to inform you that the <span className="font-bold">annual tuition fee</span> for your program is <span className="font-bold text-blue-600">Rs. 4,50,000/-</span>. Based on the evaluation of your academic performance and qualifying examination scores, you have been awarded a <span className="font-bold">Special Merit Scholarship of <span className="text-blue-600">Rs. {totalFee - applicant.feePayable}/-</span></span>. <span className="font-bold">Congratulations on this achievement!</span> The scholarship amount will be <span className="font-bold">adjusted against your annual tuition fee</span> as per the university’s rules and regulations and the net payable annual fee will be <span className="font-bold text-blue-600">Rs. {applicant.feePayable}/-</span></p>
             <p>The continuation of this scholarship in subsequent years is subject to your academic performance, as outlined below:</p>
             <div className="px-5">
                 <table className="border my-0">
                     <tr className="border m-0">
-                        <td className="font-bold border">CGPA Range</td>
-                        <td className="font-bold">Scholarship Status</td>
+                        <td className="font-bold border px-2">CGPA Range</td>
+                        <td className="font-bold px-2">Scholarship Status</td>
                     </tr>
                     <tr className="border m-0">
-                        <td className="border">CGPA 8.0 &amp; above</td>
-                        <td>Scholarship slab increases by one level</td>
+                        <td className="border px-2">CGPA 8.0 &amp; above</td>
+                        <td className=' px-2'>Scholarship slab increases by one level</td>
                     </tr>
                     <tr className="border m-0">
-                        <td className="border">CGPA 7.0 – 7.99</td>
-                        <td>Scholarship continues in the current slab</td>
+                        <td className="border px-2">CGPA 7.0 – 7.99</td>
+                        <td className='px-2'>Scholarship continues in the current slab</td>
                     </tr>
                     <tr className="border m-0">
-                        <td className="border">CGPA below 7.0</td>
-                        <td>Scholarship reduced by one slab</td>
+                        <td className="border px-2">CGPA below 7.0</td>
+                        <td className='px-2'>Scholarship reduced by one slab</td>
                     </tr>
                 </table>
             </div>
-            <p class="text-xs"><em>Note: The scholarship slab will vary every year based on your CGPA.</em></p>
+            <p className="text-xs"><em>Note: The scholarship slab will vary every year based on your CGPA.</em></p>
             <p>A detailed <span className="font-bold">slab-wise tuition fee and eligibility chart</span> is enclosed for your reference.</p>
             <p className="font-bold mt-3">Alternative Industry-Integrated Option:</p>
-            <p className='text-justify'>You are also eligible for the <span className="font-bold">B.Tech CSE – Cloud ERP (SAP)</span> program, a career-focused curriculum, designed and delivered by industry professionals at an additional fee, with <span class="fw-bold">guaranteed paid internships in the final year</span> for all qualifying students.</p>
+            <p className='text-justify'>You are also eligible for the <span className="font-bold">B.Tech CSE – Cloud ERP (SAP)</span> program, a career-focused curriculum, designed and delivered by industry professionals at an additional fee, with <span className="font-bold">guaranteed paid internships in the final year</span> for all qualifying students.</p>
             <p className="font-bold mt-3">Admission Confirmation:</p>
             <p>Please report to the university between <span className="font-bold text-red-600">{formattedDate}</span> to <span className="font-bold text-red-600">{getSixthDayFromToday()}</span> and complete the admission formalities by submitting:</p>
             <div className='pl-5'>
@@ -108,7 +111,7 @@ const AllotmentOrderPage = () => {
                 </ul>
             </div>
             <p><span className="font-bold">Note:</span> Admission will be confirmed only upon fulfilment of all criteria mentioned above. If any discrepancies occur in the marks/documents it may result in withdrawal of this provisional admission.</p>
-            <p className='text-justify'>Admissions are strictly based on <span className="font-bold">merit</span> and <span className="font-bold">first-come, first-served</span> basis. There is <span class="font-bold">no management quota</span>, and we advise not to entertain any intermediaries or consultants. We look forward to welcoming you to the vibrant campus of Sreenidhi University.</p>
+            <p className='text-justify'>Admissions are strictly based on <span className="font-bold">merit</span> and <span className="font-bold">first-come, first-served</span> basis. There is <span className="font-bold">no management quota</span>, and we advise not to entertain any intermediaries or consultants. We look forward to welcoming you to the vibrant campus of Sreenidhi University.</p>
         </div>
         <div className="w-full px-5 mt-5">
             <p>Warm regards,</p>
