@@ -35,8 +35,19 @@ const AllotmentOrderPage = () => {
             .catch((error) => {
                 console.error('Error fetching applicant:', error);
             });
-            
        }, [])
+
+    function getSixthDayFromToday() {
+        const today = new Date();
+        const sixthDay = new Date(today);
+        sixthDay.setDate(today.getDate() + 6);
+
+        const day = String(sixthDay.getDate()).padStart(2, '0');
+        const month = String(sixthDay.getMonth() + 1).padStart(2, '0'); // Month is 0-indexed
+        const year = sixthDay.getFullYear();
+
+        return `${day}-${month}-${year}`;
+    }
 
   return (
     <>
@@ -57,10 +68,10 @@ const AllotmentOrderPage = () => {
         <div className="w-full px-5">
             <p>Dear Mr/Ms. <span className="font-bold">{applicant.applicantName}</span>,</p>
             <p>Greetings from <span className="font-bold">Sreenidhi University</span>!</p>
-            <p>We are happy to offer you a provisional admission to the <span className="font-bold">B. Tech program</span> at Sreenidhi University for the academic year <span className="font-bold">2025-2026</span>, based on your commendable performance in <span className="font-bold">SUCET / EAMCET / JEE / and 10+2 examinations</span>.</p>
-            <p className="font-bold">Offered Program Options (as per your academic merit and preferences) will be in the attached annexure.</p>
+            <p className='text-justify'>We are happy to offer you a provisional admission to the <span className="font-bold">B. Tech program</span> at Sreenidhi University for the academic year <span className="font-bold">2025-2026</span>, based on your commendable performance in <span className="font-bold">SUCET / EAMCET / JEE / and 10+2 examinations</span>.</p>
+            <p className="font-bold mt-3">Offered Program Options (as per your academic merit and preferences) will be in the attached annexure.</p>
             <p className="font-bold mt-3">Special Merit Scholarship:</p>
-            <p>We are pleased to inform you that the <span className="font-bold">annual tuition fee</span> for your program is <span className="font-bold text-blue-600">Rs. 4,50,000/-</span>. Based on the evaluation of your academic performance and qualifying examination scores, you have been awarded a <span className="font-bold">Special Merit Scholarship of <span className="text-blue-600">Rs. {totalFee}/-</span></span>. <span className="font-bold">Congratulations on this achievement!</span> The scholarship amount will be <span className="font-bold">adjusted against your annual tuition fee</span> as per the university’s rules and regulations and the net payable annual fee will be <span className="font-bold text-blue-600">Rs. {totalFee}/-</span></p>
+            <p className='text-justify'>We are pleased to inform you that the <span className="font-bold">annual tuition fee</span> for your program is <span className="font-bold text-blue-600">Rs. 4,50,000/-</span>. Based on the evaluation of your academic performance and qualifying examination scores, you have been awarded a <span className="font-bold">Special Merit Scholarship of <span className="text-blue-600">Rs. {totalFee}/-</span></span>. <span className="font-bold">Congratulations on this achievement!</span> The scholarship amount will be <span className="font-bold">adjusted against your annual tuition fee</span> as per the university’s rules and regulations and the net payable annual fee will be <span className="font-bold text-blue-600">Rs. {totalFee}/-</span></p>
             <p>The continuation of this scholarship in subsequent years is subject to your academic performance, as outlined below:</p>
             <div className="px-5">
                 <table className="border my-0">
@@ -85,9 +96,9 @@ const AllotmentOrderPage = () => {
             <p class="text-xs"><em>Note: The scholarship slab will vary every year based on your CGPA.</em></p>
             <p>A detailed <span className="font-bold">slab-wise tuition fee and eligibility chart</span> is enclosed for your reference.</p>
             <p className="font-bold mt-3">Alternative Industry-Integrated Option:</p>
-            <p>You are also eligible for the <span className="font-bold">B.Tech CSE – Cloud ERP (SAP)</span> program, a career-focused curriculum, designed and delivered by industry professionals at an additional fee, with <span class="fw-bold">guaranteed paid internships in the final year</span> for all qualifying students.</p>
+            <p className='text-justify'>You are also eligible for the <span className="font-bold">B.Tech CSE – Cloud ERP (SAP)</span> program, a career-focused curriculum, designed and delivered by industry professionals at an additional fee, with <span class="fw-bold">guaranteed paid internships in the final year</span> for all qualifying students.</p>
             <p className="font-bold mt-3">Admission Confirmation:</p>
-            <p>Please report to the university between <span className="font-bold text-red-600">{formattedDate}</span> and complete the admission formalities by submitting:</p>
+            <p>Please report to the university between <span className="font-bold text-red-600">{formattedDate}</span> to <span className="font-bold text-red-600">{getSixthDayFromToday()}</span> and complete the admission formalities by submitting:</p>
             <div className='pl-5'>
                 <ul>
                     <li>- This Admission Letter - Original certificates of 10th & 12th (Marks Memo and TC)</li>
@@ -97,13 +108,17 @@ const AllotmentOrderPage = () => {
                 </ul>
             </div>
             <p><span className="font-bold">Note:</span> Admission will be confirmed only upon fulfilment of all criteria mentioned above. If any discrepancies occur in the marks/documents it may result in withdrawal of this provisional admission.</p>
-            <p>Admissions are strictly based on <span className="font-bold">merit</span> and <span className="font-bold">first-come, first-served</span> basis. There is <span class="font-bold">no management quota</span>, and we advise not to entertain any intermediaries or consultants. We look forward to welcoming you to the vibrant campus of Sreenidhi University.</p>
+            <p className='text-justify'>Admissions are strictly based on <span className="font-bold">merit</span> and <span className="font-bold">first-come, first-served</span> basis. There is <span class="font-bold">no management quota</span>, and we advise not to entertain any intermediaries or consultants. We look forward to welcoming you to the vibrant campus of Sreenidhi University.</p>
         </div>
-        <div className="w-full px-5">
+        <div className="w-full px-5 mt-5">
             <p>Warm regards,</p>
             <img src={signature} className="w-50" alt="" />
             <p className="font-bold m-0">Director – Admissions</p>
             <p className="font-bold">Sreenidhi University Admissions Office</p>
+        </div>
+        <div className="w-full flex justify-center gap-3 mb-3">
+            <button onClick={()=>navigate('/view-all')} type="button" className="text-sm/6 font-semibold text-gray-900 cursor-pointer">Cancel</button>
+            <button onClick={()=>window.print()} type="submit" className="rounded-md bg-green-800 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-green-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-800 cursor-pointer">Print <i className="fa-solid fa-print"></i></button>
         </div>
     </>
   )

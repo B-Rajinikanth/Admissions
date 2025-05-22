@@ -21,5 +21,3 @@ app.listen(PORT, () => {
 
 
 // appsatsuh
-
-// mongodb+srv://rajinikanthb:appsatsuh@cluster0.woxhs0j.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
