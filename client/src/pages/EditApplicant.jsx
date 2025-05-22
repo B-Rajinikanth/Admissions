@@ -33,9 +33,9 @@ const EditApplicant = () => {
         else if (eapcetRank <= 90000) eapcetWeight = 40;
         else if (eapcetRank <= 120000) eapcetWeight = 20;
 
-        if (sucetMarks >= 16 && sucetMarks <= 25) sucetWeight = 80;
-        else if (sucetMarks >= 6) sucetWeight = 40;
-        else if (sucetMarks >= 0 && sucetMarks <= 5) sucetWeight = 100;
+        if (sucetMarks > 26) sucetWeight = 100;
+        else if (sucetMarks > 16) sucetWeight = 80;
+        else if (sucetMarks > 6) sucetWeight = 40;
 
         // Calculate merit score
         meritScore = (interWeight / 100 * 10) + (eapcetWeight / 100 * 80) + (sucetWeight / 100 * 10);
@@ -88,7 +88,6 @@ const EditApplicant = () => {
             <Link to={'/view-all'} className='bg-green-800 hover:bg-green-600 text-green-50 px-4 py-2 rounded-md hover:font-semibold'>View All <i className="fa-solid fa-eye"></i></Link>
         </div>
         <div className='w-full md:w-auto md:mx-9 p-6 bg-green-50 rounded-md md:shadow-md'>
-
             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
 
                 <div className="sm:col-span-2 sm:col-start-1">

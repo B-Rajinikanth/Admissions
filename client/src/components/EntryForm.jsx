@@ -8,6 +8,7 @@ const EntryForm = () => {
     const navigate = useNavigate();
 
     const [newApplicant, setNewApplicant] = useState({
+        counsellorName: "",
         applicationNumber: 0,
         applicantName: "",
         mobileNumber: 0,
@@ -21,7 +22,7 @@ const EntryForm = () => {
     const [applicationNumber, setApplicationNumber] = useState()
 
     const handleSave = ()=> {
-        if(newApplicant.applicantName === "" || newApplicant.mobileNumber === 0 || newApplicant.interMarks === 0 || newApplicant.eapcetRank === 0){
+        if(newApplicant.applicantName === "" || newApplicant.mobileNumber === 0 || newApplicant.interMarks === 0 || newApplicant.eapcetRank === 0 || newApplicant.counsellorName === ''){
             alert('Please fill all the required fields')
             return
         }
@@ -41,9 +42,14 @@ const EntryForm = () => {
         <Link to={'/view-all'} className='bg-green-800 hover:bg-green-600 text-green-50 px-4 py-2 rounded-md hover:font-semibold'>View All <i className="fa-solid fa-eye"></i></Link>
     </div>
     <div className='w-full md:w-auto md:mx-9 p-6 bg-green-50 rounded-md md:shadow-md'>
-
+        <div className="sm:col-span-2 sm:col-start-1">
+            <label htmlFor="counsellorName" className="block text-sm/6 font-medium text-gray-900"><span className='text-red-600'>*</span>Counsellor Name</label>
+            <div className="mt-2">
+                <input type="text" onChange={(e)=> setNewApplicant({ ...newApplicant, counsellorName: e.target.value })} name="counsellorName" id="counsellorName" autoComplete="address-level2" className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
+            </div>
+        </div>     
         <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-
+            
             <div className="sm:col-span-2 sm:col-start-1">
                 <label htmlFor="applicationNumber" className="block text-sm/6 font-medium text-gray-900">Application Number</label>
                 <div className="mt-2">

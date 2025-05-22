@@ -74,6 +74,7 @@ const DisplayAll = () => {
                             <th className='text-start p-3 text-gray-600'>EAPCET Rank</th>
                             <th className='text-start p-3 text-gray-600'>SUCET Marks</th>
                             <th className='text-start p-3 text-gray-600'>Date of Entry</th>
+                            <th className='text-start p-3 text-gray-600'>Cousellor</th>
                             <th className='text-start p-3 text-gray-600'>Action</th>
                         </tr>
                     </thead>
@@ -89,6 +90,7 @@ const DisplayAll = () => {
                                     <td className='text-start px-3'>{applicant.eapcetRank}</td>
                                     <td className='text-start px-3'>{applicant.sucetMarks}</td>
                                     <td className='text-start px-3'>{formattedDate(applicant.createdAt)}</td>
+                                    <td className='text-start px-3'>{applicant.counsellorName}</td>
                                     <td className='text-start px-3'>
                                         <Link to={`/edit/${applicant._id}` } className='bg-yellow-500 rounded px-4 py-1 mx-1 text-green-50 cursor-pointer'><i className="fa-solid fa-pen-to-square"></i></Link>
                                         <button onClick={ () => handleDelete(applicant._id) } className='bg-red-600 rounded px-4 py-1 mx-1 text-green-50 cursor-pointer'><i className="fa-solid fa-trash"></i></button>

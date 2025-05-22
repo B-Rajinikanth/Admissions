@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
 const applicantSchema = new mongoose.Schema({
+    counsellorName: { type: String, required: true},
     applicationNumber: { type: Number },
     applicantName: { type: String, required: true },
     mobileNumber: {type: Number, required: true },
