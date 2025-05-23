@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, use } from 'react'
 import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom';
 // import { Link, useNavigate } from 'react-router-dom'
@@ -8,6 +8,7 @@ const DisplayAll = () => {
     const navigate = useNavigate();
 
     const [allApplicants, setAllApplicants] = useState([])
+    const [user, setUser] = useState(null);
 
     useEffect(()=> {
         axios
@@ -24,6 +25,22 @@ const DisplayAll = () => {
     useEffect(() => {
         console.log('Updated applicants state:', allApplicants);
       }, [allApplicants]);
+
+      useEffect(()=>{
+        const token = localStorage.getItem('token');
+
+        if (!token) return;
+
+        axios.get('http://localhost:5555/auth/profile', {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+        })
+        .then((res) => setUser(res.data.user))
+        .catch((err) => {
+        console.error('Error fetching profile:', err.response?.data?.message || err.message);
+        });
+      }, [])
 
       const handleDelete = (id) => {
         if (!window.confirm('Are you sure you want to delete this applicant?')) return;
@@ -59,8 +76,13 @@ const DisplayAll = () => {
   return (
     <>
         <div className="w-full bg-green-50 flex flex-col justify-center items-center py-5">
-            <div className='mb-5'>
-                <Link to={"/"} className='bg-green-800 text-green-50 font-bold px-4 py-2 rounded-md hover:bg-green-600'>Add New <i className="fa-solid fa-user-plus"></i></Link>
+            <div className='flex justify-between mb-5'>
+                <div>
+                    <Link to={"/"} className='bg-green-800 text-green-50 font-bold px-4 py-2 rounded-md hover:bg-green-600'>Add New <i className="fa-solid fa-user-plus"></i></Link>
+                </div>
+                <div>
+                    <p>Hello, {user ? user.name : "Guest"}</p>
+                </div>
             </div>
             <div>
                 <table className="table-auto border border-gray-300">

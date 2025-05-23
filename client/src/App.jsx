@@ -5,6 +5,8 @@ import HomePage from "./pages/HomePage"
 import ShowApplicants from "./pages/ShowApplicants"
 import EditApplicant from "./pages/EditApplicant"
 import AllotmentOrderPage from "./pages/AllotmentOrderPage"
+import { Register } from "./components/Register"
+import { Login } from "./components/Login"
 
 function App() {
 
@@ -16,6 +18,8 @@ function App() {
           <Route path="/view-all" element= { <ShowApplicants /> }></Route>
           <Route path="/edit/:id" element= { <EditApplicant /> }></Route>
           <Route path="/allotment/:id" element= {<AllotmentOrderPage /> }></Route>
+          <Route path='/register' element= { <Register /> }></Route>
+          <Route path="/login" element= { <Login /> }></Route>
       </Routes>
     </>
   )

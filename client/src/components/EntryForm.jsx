@@ -19,8 +19,6 @@ const EntryForm = () => {
         remarks: ""
     })
 
-    const [applicationNumber, setApplicationNumber] = useState()
-
     const handleSave = ()=> {
         if(newApplicant.applicantName === "" || newApplicant.mobileNumber === 0 || newApplicant.interMarks === 0 || newApplicant.eapcetRank === 0 || newApplicant.counsellorName === ''){
             alert('Please fill all the required fields')
