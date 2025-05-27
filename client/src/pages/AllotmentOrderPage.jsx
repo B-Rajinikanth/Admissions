@@ -8,7 +8,6 @@ import signature from '../assets/srinivar_sign.png'
 const AllotmentOrderPage = () => {
 
     const [totalFee, setTotalFee] = useState(450000)
-    
 
     const getTwoDigits = (n)=> {
         if(n < 10)
@@ -49,6 +48,11 @@ const AllotmentOrderPage = () => {
         const year = sixthDay.getFullYear();
 
         return `${day}-${month}-${year}`;
+    }
+
+    const handlePrint = () => {
+        window.print()
+        navigate('/view-all')
     }
 
 
@@ -122,7 +126,7 @@ const AllotmentOrderPage = () => {
         </div>
         <div className="w-full flex justify-center gap-3 mb-3">
             <button onClick={()=>navigate('/view-all')} type="button" className="text-sm/6 font-semibold text-gray-900 cursor-pointer">Cancel</button>
-            <button onClick={()=>window.print()} type="submit" className="rounded-md bg-green-800 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-green-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-800 cursor-pointer">Print <i className="fa-solid fa-print"></i></button>
+            <button onClick={()=>handlePrint()} type="submit" className="rounded-md bg-green-800 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-green-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-800 cursor-pointer">Print <i className="fa-solid fa-print"></i></button>
         </div>
     </>
   )

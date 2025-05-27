@@ -2,6 +2,7 @@ import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom'
 
 import React, { useState } from 'react'
+import CalculatorModal from './CalculatorModal';
 
 const EntryForm = () => {
 
@@ -18,6 +19,8 @@ const EntryForm = () => {
         feePayable: 0,
         remarks: ""
     })
+
+    const cousellors = ["select cousellor", "Rajinikanth B", "Sai Krishna K", "Karthikeyan"]
 
     const handleSave = ()=> {
         if(newApplicant.applicantName === "" || newApplicant.mobileNumber === 0 || newApplicant.interMarks === 0 || newApplicant.eapcetRank === 0 || newApplicant.counsellorName === ''){
@@ -36,6 +39,7 @@ const EntryForm = () => {
 
   return (
     <>
+    <CalculatorModal />
     <div className="w-full flex justify-end px-20 py-5">
         <Link to={'/view-all'} className='bg-green-800 hover:bg-green-600 text-green-50 px-4 py-2 rounded-md hover:font-semibold'>View All <i className="fa-solid fa-eye"></i></Link>
     </div>
@@ -43,7 +47,14 @@ const EntryForm = () => {
         <div className="sm:col-span-2 sm:col-start-1">
             <label htmlFor="counsellorName" className="block text-sm/6 font-medium text-gray-900"><span className='text-red-600'>*</span>Counsellor Name</label>
             <div className="mt-2">
-                <input type="text" onChange={(e)=> setNewApplicant({ ...newApplicant, counsellorName: e.target.value })} name="counsellorName" id="counsellorName" autoComplete="address-level2" className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
+                {/* <input type="text" onChange={(e)=> setNewApplicant({ ...newApplicant, counsellorName: e.target.value })} name="counsellorName" id="counsellorName" autoComplete="address-level2" className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" /> */}
+                <select onChange={(e)=> setNewApplicant({ ...newApplicant, counsellorName: e.target.value })} className='block w-full rounded-md bg-white px-3 py-2.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6' name="cousellor" id="cousellor">
+                    {
+                        cousellors.map((cousellor, index)=>(
+                            <option key={index} value={cousellor}>{cousellor}</option>
+                        ))
+                    }
+                </select>
             </div>
         </div>     
         <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">

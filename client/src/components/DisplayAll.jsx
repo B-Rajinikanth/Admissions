@@ -1,6 +1,7 @@
 import React, { useState, useEffect, use } from 'react'
 import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom';
+import CalculatorModal from './CalculatorModal';
 // import { Link, useNavigate } from 'react-router-dom'
 
 const DisplayAll = () => {
@@ -10,11 +11,15 @@ const DisplayAll = () => {
     const [allApplicants, setAllApplicants] = useState([])
     const [user, setUser] = useState(null);
 
+    const [searchMobile, setSearchMobile] = useState('');
+    const [filteredApplicants, setFilteredApplicants] = useState([]);
+
     useEffect(()=> {
         axios
           .get('http://localhost:5555/applicants')
           .then((response)=> {
                 setAllApplicants(response.data.applicants);
+                setFilteredApplicants(response.data.applicants);
           })
           .catch((error)=> {
               alert('Not Data received!')
@@ -51,6 +56,7 @@ const DisplayAll = () => {
             alert('Applicant deleted successfully!');
             // Refresh the list after deletion (refetch or filter)
             setAllApplicants(prev => prev.filter(applicant => applicant._id !== id));
+            setFilteredApplicants(prev => prev.filter(applicant => applicant._id !== id));
           })
           .catch((error) => {
             console.error('Error deleting applicant:', error);
@@ -72,19 +78,44 @@ const DisplayAll = () => {
             return res
       }
 
+      const handleSearch = () => {
+        const filtered = allApplicants.filter(applicant =>
+            applicant.mobileNumber.toString().includes(searchMobile)
+        );
+        setFilteredApplicants(filtered);
+    };
+
+    const handleReset = () => {
+        setSearchMobile('');
+        setFilteredApplicants(allApplicants);
+    };
+
 
   return (
     <>
-        <div className="w-full bg-green-50 flex flex-col justify-center items-center py-5">
-            <div className='flex justify-between mb-5'>
+
+        <div className='w-full flex justify-end px-10 py-3'>
+            <CalculatorModal />
+            <p className='align-right font-semibold'>&nbsp; &nbsp; Hello, {user ? user.name : "Guest"}</p>
+        </div>
+        <div className="w-full bg-green-50 py-5">
+            <div className='flex justify-between mb-5 px-10'>
+                <div className='flex items-center space-x-2'>
+                    <input
+                        type="text"
+                        placeholder="Search by Mobile"
+                        value={searchMobile}
+                        onChange={(e) => setSearchMobile(e.target.value)}
+                        className="w-100 border px-3 py-1 rounded"
+                    />
+                    <button onClick={handleSearch} className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 cursor-pointer"><i className="fa-solid fa-magnifying-glass"></i> Search</button>
+                    <button onClick={handleReset} className="bg-gray-400 text-white px-3 py-1 rounded hover:bg-gray-500 cursor-pointer"><i className="fa-solid fa-users"></i> Show All</button>
+                </div>
                 <div>
                     <Link to={"/"} className='bg-green-800 text-green-50 font-bold px-4 py-2 rounded-md hover:bg-green-600'>Add New <i className="fa-solid fa-user-plus"></i></Link>
                 </div>
-                <div>
-                    <p>Hello, {user ? user.name : "Guest"}</p>
-                </div>
             </div>
-            <div>
+            <div className='px-1'>
                 <table className="table-auto border border-gray-300">
                     <thead>
                         <tr className='bg-gray-100'>
@@ -102,7 +133,7 @@ const DisplayAll = () => {
                     </thead>
                     <tbody>
                         {
-                            allApplicants.map((applicant, index)=>(
+                            filteredApplicants.map((applicant, index)=>(
                                 <tr key={applicant._id} className='border-b-1 border-gray-300'>
                                     <td className='text-start px-3 py-2'>{index+1}</td>
                                     <td className='text-start px-3'>{applicant.applicationNumber}</td>
