@@ -17,10 +17,12 @@ const EntryForm = () => {
         eapcetRank: 0,
         sucetMarks: 0,
         feePayable: 0,
+        isAllotmentReleased: false,
+        isJoined: false,
         remarks: ""
     })
 
-    const cousellors = ["select cousellor", "G B Murali",  "Chaitanya Lakshmi B", "Sai Krishna Narge", "Uday Kumar Birru", "Navya Deshagani", "Maheshwari Banala", "Sqwjanya Nakketla", "Anitha Gummalla", "Saikrishna Tirunagari", "Uday Sambet", "Pavan Kumar Gaidhankar", "Roshini Jadala", "Putta Sreenivasulu ", "T Prasad Reddy", " P Srinivas", "B V Raju", "N Ashok Reddy", " R Ananth Nag", "Ch Nagaraju", " K Sujatha", "Ch Akhila", "T Chandara Kala", " S Deeksha", " M Prasanna"]
+    const cousellors = ["select cousellor", "G B Murali",  "Chaitanya Lakshmi B", "Sai Krishna Narge", "Uday Kumar Birru", "Navya Deshagani", "Maheshwari Banala", "Sqwjanya Nakketla", "Anitha Gummalla", "Saikrishna Tirunagari", "Uday Sambet", "Pavan Kumar G", "Roshini Jadala", "Putta Sreenivasulu ", "T Prasad Reddy", " P Srinivas", "B V Raju", "N Ashok Reddy", " R Ananth Nag", "Ch Nagaraju", " K Sujatha", "Ch Akhila", "T Chandara Kala", " S Deeksha", " M Prasanna"]
 
     const handleSave = ()=> {
         if(newApplicant.applicantName === "" || newApplicant.mobileNumber === 0 || newApplicant.interMarks === 0 || newApplicant.eapcetRank === 0 || newApplicant.counsellorName === ''){

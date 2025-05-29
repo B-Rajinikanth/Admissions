@@ -52,7 +52,7 @@ const CalculatorModal = () => {
       {/* Fixed Calculator Button at Top Right */}
       <button
         onClick={() => setShowModal(true)}
-        className="fixed bottom-6 right-6 bg-blue-800 hover:bg-blue-500 text-white px-4 py-3 rounded-full cursor-pointer shadow-lg hover:bg-blue-700 z-50"
+        className="bg-green-800 hover:bg-green-600 text-white px-4 py-3 rounded-full cursor-pointer shadow-lg hover:bg-blue-700 z-50"
       >
         <i className="fa-solid fa-sack-dollar"></i>
       </button>

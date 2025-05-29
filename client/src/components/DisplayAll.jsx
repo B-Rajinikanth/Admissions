@@ -78,10 +78,18 @@ const DisplayAll = () => {
 
       const formattedDate = (isoDate )=> {
             const date = new Date(isoDate);
-            // const res = `${String(date.getDate()).padStart(2, '0')}-${String(date.getMonth() + 1).padStart(2, '0')}-${date.getFullYear()}, ${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
-            const res = `${String(date.getDate()).padStart(2, '0')}-${String(date.getMonth() + 1).padStart(2, '0')}-${date.getFullYear()}`;
+            const res = `${String(date.getDate()).padStart(2, '0')}-${String(date.getMonth() + 1).padStart(2, '0')}-${date.getFullYear()}, ${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+            // const res = `${String(date.getDate()).padStart(2, '0')}-${String(date.getMonth() + 1).padStart(2, '0')}-${date.getFullYear()}`;
             return res
       }
+
+      const showDate = (isoDate )=> {
+        const date = new Date(isoDate);
+        const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        // const res = `${String(date.getDate()).padStart(2, '0')}-${String(date.getMonth() + 1).padStart(2, '0')}-${date.getFullYear()}, ${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+        const res = `${String(date.getDate()).padStart(2, '0')} ${months[date.getMonth()]}`;
+        return res
+  }
 
       const handleSearch = () => {
         const filtered = allApplicants.filter(applicant =>
@@ -95,17 +103,65 @@ const DisplayAll = () => {
         setFilteredApplicants(allApplicants);
     };
 
+    const getTodaysCount = () => {
+        const today = new Date();
+        return allApplicants.filter((applicant) => {
+          const createdAt = new Date(applicant.createdAt);
+          return (
+            createdAt.getDate() === today.getDate() &&
+            createdAt.getMonth() === today.getMonth() &&
+            createdAt.getFullYear() === today.getFullYear()
+          );
+        }).length;
+    };
+
+    const getLast7DaysCount = () => {
+        const today = new Date();
+        const sevenDaysAgo = new Date();
+        sevenDaysAgo.setDate(today.getDate() - 7);
+      
+        return allApplicants.filter((applicant) => {
+          const createdAt = new Date(applicant.createdAt);
+          return createdAt >= sevenDaysAgo;
+        }).length;
+      };
+
+      
+
 
   return (
     <>
-        {/* Calculator */}
-        <CalculatorModal />
+        {/* Calculator and counters */}
+        <div className='w-full fixed bottom-1 flex justify-between gap-3 bg-blue-100 px-5 py-2'>
+
+            {/* Counters */}
+            <div className='flex flex-col justify-center items-center bg-blue-800 hover:bg-blue-500 rounded-lg px-2'>
+                <p className="text-blue-100 text-xs font-bold">Today</p>
+                <p className='text-white text-xl font-bold'>{getTodaysCount()}</p>
+            </div>
+            <div className='flex flex-col justify-center items-center bg-blue-800 hover:bg-blue-500 rounded-lg px-2'>
+                <p className="text-blue-100 text-xs font-bold">7 Days</p>
+                <p className='text-white text-xl font-bold'>{getLast7DaysCount()}</p>
+            </div>
+            <div className='flex flex-col justify-center items-center bg-blue-800 hover:bg-blue-500 rounded-lg px-2'>
+                <p className="text-blue-100 text-xs font-bold">Total</p>
+                <p className='text-white text-xl font-bold'>{allApplicants.length}</p>
+            </div>
+            
+
+            <CalculatorModal />
+        </div>
         
+
+        {/* User or Counsellor Info */}
         <div className='w-full flex justify-center md:justify-end px-3 md:px-10 py-3'>
             <p className='align-right font-semibold'>Hello, {user ? user.name : "Guest"}</p>
         </div>
 
-        <div className="w-full bg-green-50 py-5 mb-10">
+        {/* Full Body */}
+        <div className="w-full bg-green-50 py-5 pb-20">
+
+            {/* Search Bar and Add New Applicant */}
             <div className='flex items-center gap-3 justify-between mb-5 px-3 md:px-10'>
                 <div className='w-80 flex items-center justify-center px-4 bg-green-200 rounded-full'>
                     <input
@@ -130,6 +186,8 @@ const DisplayAll = () => {
                     <Link to={"/"} className='bg-green-800 text-green-50 h-9 font-bold mx-2 px-3 py-2 rounded-md hover:bg-green-600'><span className='hidden lg:inline'>Add New</span> <i className="fa-solid fa-user-plus"></i></Link>
                 </div>
             </div>
+
+            {/* md: Display All */}
             <div className='flex justify-center bg-gray-50 mx-3 overflow-auto rounded-lg shadow-md hidden md:block'>
                 <table className="table-auto w-full">
                     <thead>
@@ -175,7 +233,8 @@ const DisplayAll = () => {
                 </table>
             </div>
 
-            <div className='grid grid-cols-1 sm:grid-cols-2 mx-3 gap-4 md:hidden'>
+            {/* xs, sm: Display All */}
+            <div className='grid grid-cols-1 sm:grid-cols-2 mx-3 gap-3 md:hidden'>
                 {
                     filteredApplicants.map((applicant, index)=>(
                         <div className="bg-gray-50 p-4 shadow-md rounded-lg">
@@ -183,7 +242,7 @@ const DisplayAll = () => {
                             <div className='text-gray-600'>{applicant.applicationNumber}</div>
                                 <div className='text-gray-600 font-bold'>{applicant.applicantName}</div>
                                 <div className='text-gray-600'>{applicant.mobileNumber}</div>
-                                <div className='flex justify-center items-center'>
+                                <div className='flex justify-center items-center pb-1'>
                                     <Link to={`/edit/${applicant._id}` } className='text-blue-800 hover:text-blue-500 text-md cursor-pointer'><i className="fa-solid fa-pen-to-square"></i></Link>
                                     {/* <button onClick={ () => handleDelete(applicant._id) } className='w-9 h-9 flex items-center justify-center bg-red-600 rounded px-4 py-1 mx-1 text-green-50 cursor-pointer'><i className="fa-solid fa-trash"></i></button> */}
                                     {/* <button onClick={ ()=> printValidate(applicant) } className='invisible xl:visible text-green-800 hover:text-green-600 px-2 py-1 mx-1 cursor-pointer'><i className="fa-solid fa-print"></i></button> */}
@@ -192,7 +251,7 @@ const DisplayAll = () => {
                             <div className='flex justify-between items-center'>
                                 <div className='text-xs bg-green-50 rounded-md px-2 py-1'>{applicant.interMarks} | {applicant.eapcetRank} | {applicant.sucetMarks}</div>
                                 <div className='flex'>
-                                    <div className='text-xs text-gray-500'>{formattedDate(applicant.createdAt)} | {applicant.counsellorName}</div>
+                                    <div className='text-xs text-gray-500'>{applicant.counsellorName} | {showDate(applicant.createdAt)}</div>
                                     <div className='text-xs text-gray-500'></div>
                                 </div>
                             </div>
