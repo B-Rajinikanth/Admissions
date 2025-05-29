@@ -20,7 +20,7 @@ const EntryForm = () => {
         remarks: ""
     })
 
-    const cousellors = ["select cousellor", "G B Murali",  "Chaitanya Lakshmi Bijinepally", "Sai Krishna Narge", "Uday Kumar Birru", "Navya Deshagani", "Maheshwari Banala", "Sqwjanya Nakketla", "Anitha Gummalla", "Saikrishna Tirunagari", "Uday Sambet", "Pavan Kumar Gaidhankar", "Roshini Jadala", "Putta Sreenivasulu ", "T Prasad Reddy", " P Srinivas", "B V Raju", "N Ashok Reddy", " R Ananth Nag", "Ch Nagaraju", " K Sujatha", "Ch Akhila", "T Chandara Kala", " S Deeksha", " M Prasanna"]
+    const cousellors = ["select cousellor", "G B Murali",  "Chaitanya Lakshmi B", "Sai Krishna Narge", "Uday Kumar Birru", "Navya Deshagani", "Maheshwari Banala", "Sqwjanya Nakketla", "Anitha Gummalla", "Saikrishna Tirunagari", "Uday Sambet", "Pavan Kumar Gaidhankar", "Roshini Jadala", "Putta Sreenivasulu ", "T Prasad Reddy", " P Srinivas", "B V Raju", "N Ashok Reddy", " R Ananth Nag", "Ch Nagaraju", " K Sujatha", "Ch Akhila", "T Chandara Kala", " S Deeksha", " M Prasanna"]
 
     const handleSave = ()=> {
         if(newApplicant.applicantName === "" || newApplicant.mobileNumber === 0 || newApplicant.interMarks === 0 || newApplicant.eapcetRank === 0 || newApplicant.counsellorName === ''){
@@ -40,7 +40,7 @@ const EntryForm = () => {
   return (
     <>
     <CalculatorModal />
-    <div className="w-full flex justify-end px-20 py-5">
+    <div className="w-full flex justify-center md:justify-end px-20 py-5">
         <Link to={'/view-all'} className='bg-green-800 hover:bg-green-600 text-green-50 px-4 py-2 rounded-md hover:font-semibold'>View All <i className="fa-solid fa-eye"></i></Link>
     </div>
     <div className='w-full md:w-auto md:mx-9 p-6 bg-green-50 rounded-md md:shadow-md'>

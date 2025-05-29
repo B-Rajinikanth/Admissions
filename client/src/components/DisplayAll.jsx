@@ -4,6 +4,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import CalculatorModal from './CalculatorModal';
 // import { Link, useNavigate } from 'react-router-dom'
 
+import {FaMagnifyingGlass} from 'react-icons/fa6'
+import {IoMdClose} from 'react-icons/io'
+
 const DisplayAll = () => {
 
     const navigate = useNavigate();
@@ -18,8 +21,9 @@ const DisplayAll = () => {
         axios
           .get('http://localhost:5555/applicants')
           .then((response)=> {
-                setAllApplicants(response.data.applicants);
-                setFilteredApplicants(response.data.applicants);
+                const sortedApplicants = response.data.applicants.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+                setAllApplicants(sortedApplicants);
+                setFilteredApplicants(sortedApplicants);
           })
           .catch((error)=> {
               alert('Not Data received!')
@@ -74,7 +78,8 @@ const DisplayAll = () => {
 
       const formattedDate = (isoDate )=> {
             const date = new Date(isoDate);
-            const res = `${String(date.getDate()).padStart(2, '0')}-${String(date.getMonth() + 1).padStart(2, '0')}-${date.getFullYear()}, ${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+            // const res = `${String(date.getDate()).padStart(2, '0')}-${String(date.getMonth() + 1).padStart(2, '0')}-${date.getFullYear()}, ${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+            const res = `${String(date.getDate()).padStart(2, '0')}-${String(date.getMonth() + 1).padStart(2, '0')}-${date.getFullYear()}`;
             return res
       }
 
@@ -93,61 +98,73 @@ const DisplayAll = () => {
 
   return (
     <>
-
-        <div className='w-full flex justify-end px-10 py-3'>
-            <CalculatorModal />
-            <p className='align-right font-semibold'>&nbsp; &nbsp; Hello, {user ? user.name : "Guest"}</p>
+        {/* Calculator */}
+        <CalculatorModal />
+        
+        <div className='w-full flex justify-center md:justify-end px-3 md:px-10 py-3'>
+            <p className='align-right font-semibold'>Hello, {user ? user.name : "Guest"}</p>
         </div>
-        <div className="w-full bg-green-50 py-5">
-            <div className='flex justify-between mb-5 px-10'>
-                <div className='flex items-center space-x-2'>
+
+        <div className="w-full bg-green-50 py-5 mb-10">
+            <div className='flex items-center gap-3 justify-between mb-5 px-3 md:px-10'>
+                <div className='w-80 flex items-center justify-center px-4 bg-green-200 rounded-full'>
                     <input
                         type="text"
-                        placeholder="Search by Mobile"
+                        placeholder="search by mobile"
                         value={searchMobile}
                         onChange={(e) => setSearchMobile(e.target.value)}
-                        className="w-100 border px-3 py-1 rounded"
+                        className="w-full text-sx bg-transparent py-[11px] outline-none"
                     />
-                    <button onClick={handleSearch} className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 cursor-pointer"><i className="fa-solid fa-magnifying-glass"></i> Search</button>
-                    <button onClick={handleReset} className="bg-gray-400 text-white px-3 py-1 rounded hover:bg-gray-500 cursor-pointer"><i className="fa-solid fa-users"></i> Show All</button>
+
+                    {
+                        searchMobile 
+                        &&
+                        <IoMdClose className='text-2xl font-bold text-green-600 cursor-pointer hover:text-green-900 mr-3' onClick={handleReset} />
+                    }
+                    <FaMagnifyingGlass className='text-green-600 text-xl cursor-pointer hover:text-green-900' onClick={handleSearch}></FaMagnifyingGlass>
+                    {/* <button onClick={handleSearch} className="bg-blue-600 text-white ml-[-8px] h-9 px-3 py-1 rounded-lg hover:bg-blue-700 cursor-pointer"><i className="fa-solid fa-magnifying-glass"></i></button> */}
+                    
                 </div>
                 <div>
-                    <Link to={"/"} className='bg-green-800 text-green-50 font-bold px-4 py-2 rounded-md hover:bg-green-600'>Add New <i className="fa-solid fa-user-plus"></i></Link>
+                    {/* <button onClick={handleReset} className="bg-gray-400 h-9 text-green-50 mx-2 px-3 py-1 rounded-md hover:bg-gray-500 cursor-pointer"><i className="fa-solid fa-users"></i> <span className='hidden lg:inline'>Show All</span> </button> */}
+                    <Link to={"/"} className='bg-green-800 text-green-50 h-9 font-bold mx-2 px-3 py-2 rounded-md hover:bg-green-600'><span className='hidden lg:inline'>Add New</span> <i className="fa-solid fa-user-plus"></i></Link>
                 </div>
             </div>
-            <div className='px-1'>
-                <table className="table-auto border border-gray-300">
+            <div className='flex justify-center bg-gray-50 mx-3 overflow-auto rounded-lg shadow-md hidden md:block'>
+                <table className="table-auto w-full">
                     <thead>
-                        <tr className='bg-gray-100'>
-                            <th className='text-start p-3 text-gray-600'>S No</th>
-                            <th className='text-start p-3 text-gray-600'>Application Number</th>
-                            <th className='text-start p-3 text-gray-600'>Name of the Applicant</th>
-                            <th className='text-start p-3 text-gray-600'>Mobile Number</th>
-                            <th className='text-start p-3 text-gray-600'>Inter Marks</th>
-                            <th className='text-start p-3 text-gray-600'>EAPCET Rank</th>
-                            <th className='text-start p-3 text-gray-600'>SUCET Marks</th>
-                            <th className='text-start p-3 text-gray-600'>Date of Entry</th>
-                            <th className='text-start p-3 text-gray-600'>Cousellor</th>
-                            <th className='text-start p-3 text-gray-600'>Action</th>
+                        <tr className='w-full bg-gray-200 border-b border-gray-200'>
+                            <th className='text-start p-3 text-gray-500 whitespace-nowrap text-md'>S No</th>
+                            <th className='text-start p-3 text-gray-500 whitespace-nowrap text-md'>Application Number</th>
+                            <th className='text-start p-3 text-gray-500 whitespace-nowrap text-md'>Name of the Applicant</th>
+                            <th className='text-start p-3 text-gray-500 whitespace-nowrap text-md'>Mobile Number</th>
+                            <th className='text-start p-3 text-gray-500 whitespace-nowrap text-md'>Inter Marks</th>
+                            <th className='text-start p-3 text-gray-500 whitespace-nowrap text-md'>EAPCET Rank</th>
+                            <th className='text-start p-3 text-gray-500 whitespace-nowrap text-md'>SUCET Marks</th>
+                            <th className='text-start p-3 text-gray-500 whitespace-nowrap text-md'>Date of Entry</th>
+                            <th className='text-start p-3 text-gray-500 whitespace-nowrap text-md'>Cousellor</th>
+                            <th className='text-start p-3 text-gray-500 whitespace-nowrap text-md'>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         {
                             filteredApplicants.map((applicant, index)=>(
                                 <tr key={applicant._id} className='border-b-1 border-gray-300'>
-                                    <td className='text-start px-3 py-2'>{index+1}</td>
-                                    <td className='text-start px-3'>{applicant.applicationNumber}</td>
-                                    <td className='px-3'>{applicant.applicantName}</td>
-                                    <td className='text-start px-3'>{applicant.mobileNumber}</td>
-                                    <td className='text-start px-3'>{applicant.interMarks}</td>
-                                    <td className='text-start px-3'>{applicant.eapcetRank}</td>
-                                    <td className='text-start px-3'>{applicant.sucetMarks}</td>
-                                    <td className='text-start px-3'>{formattedDate(applicant.createdAt)}</td>
-                                    <td className='text-start px-3'>{applicant.counsellorName}</td>
-                                    <td className='text-start px-3'>
-                                        <Link to={`/edit/${applicant._id}` } className='bg-yellow-500 rounded px-4 py-1 mx-1 text-green-50 cursor-pointer'><i className="fa-solid fa-pen-to-square"></i></Link>
-                                        {/* <button onClick={ () => handleDelete(applicant._id) } className='bg-red-600 rounded px-4 py-1 mx-1 text-green-50 cursor-pointer'><i className="fa-solid fa-trash"></i></button> */}
-                                        <button onClick={ ()=> printValidate(applicant) } className='invisible xl:visible bg-green-600 rounded px-4 py-1 mx-1 text-green-50 cursor-pointer'><i className="fa-solid fa-print"></i></button>
+                                    <td className='text-start px-3 py-2 whitespace-nowrap text-md'>{index+1}</td>
+                                    <td className='text-start px-3 whitespace-nowrap text-md'>{applicant.applicationNumber}</td>
+                                    <td className='px-3 whitespace-nowrap text-md'>{applicant.applicantName}</td>
+                                    <td className='text-start px-3 whitespace-nowrap text-md'>{applicant.mobileNumber}</td>
+                                    <td className='text-start px-3 whitespace-nowrap text-md'>{applicant.interMarks}</td>
+                                    <td className='text-start px-3 whitespace-nowrap text-md'>{applicant.eapcetRank}</td>
+                                    <td className='text-start px-3 whitespace-nowrap text-md'>{applicant.sucetMarks}</td>
+                                    <td className='text-start px-3 whitespace-nowrap text-md'>{formattedDate(applicant.createdAt)}</td>
+                                    <td className='text-start px-3 whitespace-nowrap text-md'>{applicant.counsellorName}</td>
+                                    <td className='text-start px-3 whitespace-nowrap'>
+                                        <div className='flex justify-center items-center'>
+                                            <Link to={`/edit/${applicant._id}` } className='flex justify-center items-center w-9 h-9 bg-blue-800 hover:bg-blue-500 rounded px-4 py-1 mx-1 text-green-50 cursor-pointer'><i className="fa-solid fa-pen-to-square"></i></Link>
+                                            {/* <button onClick={ () => handleDelete(applicant._id) } className='w-9 h-9 flex items-center justify-center bg-red-600 rounded px-4 py-1 mx-1 text-green-50 cursor-pointer'><i className="fa-solid fa-trash"></i></button> */}
+                                            <button onClick={ ()=> printValidate(applicant) } className='flex justify-center items-center w-9 h-9 invisible xl:visible bg-green-800 hover:bg-green-600 rounded px-4 py-1 mx-1 text-green-50 cursor-pointer'><i className="fa-solid fa-print"></i></button>
+                                        </div>
                                     </td>
                                 </tr>
                             ))
@@ -156,6 +173,32 @@ const DisplayAll = () => {
                         
                     </tbody>
                 </table>
+            </div>
+
+            <div className='grid grid-cols-1 sm:grid-cols-2 mx-3 gap-4 md:hidden'>
+                {
+                    filteredApplicants.map((applicant, index)=>(
+                        <div className="bg-gray-50 p-4 shadow-md rounded-lg">
+                            <div className='flex justify-between items-center space-x-2 text-sm border-b border-gray-200 my-1'>
+                            <div className='text-gray-600'>{applicant.applicationNumber}</div>
+                                <div className='text-gray-600 font-bold'>{applicant.applicantName}</div>
+                                <div className='text-gray-600'>{applicant.mobileNumber}</div>
+                                <div className='flex justify-center items-center'>
+                                    <Link to={`/edit/${applicant._id}` } className='text-blue-800 hover:text-blue-500 text-md cursor-pointer'><i className="fa-solid fa-pen-to-square"></i></Link>
+                                    {/* <button onClick={ () => handleDelete(applicant._id) } className='w-9 h-9 flex items-center justify-center bg-red-600 rounded px-4 py-1 mx-1 text-green-50 cursor-pointer'><i className="fa-solid fa-trash"></i></button> */}
+                                    {/* <button onClick={ ()=> printValidate(applicant) } className='invisible xl:visible text-green-800 hover:text-green-600 px-2 py-1 mx-1 cursor-pointer'><i className="fa-solid fa-print"></i></button> */}
+                                </div>
+                            </div>
+                            <div className='flex justify-between items-center'>
+                                <div className='text-xs bg-green-50 rounded-md px-2 py-1'>{applicant.interMarks} | {applicant.eapcetRank} | {applicant.sucetMarks}</div>
+                                <div className='flex'>
+                                    <div className='text-xs text-gray-500'>{formattedDate(applicant.createdAt)} | {applicant.counsellorName}</div>
+                                    <div className='text-xs text-gray-500'></div>
+                                </div>
+                            </div>
+                        </div>
+                    ))
+                }
             </div>
         </div>
     </>
