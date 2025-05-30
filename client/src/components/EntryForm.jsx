@@ -41,7 +41,9 @@ const EntryForm = () => {
 
   return (
     <>
-    <CalculatorModal />
+    <div className='fixed bottom-4 right-6'>
+        <CalculatorModal />
+    </div>
     <div className="w-full flex justify-center md:justify-end px-20 py-5">
         <Link to={'/view-all'} className='bg-green-800 hover:bg-green-600 text-green-50 px-4 py-2 rounded-md hover:font-semibold'>View All <i className="fa-solid fa-eye"></i></Link>
     </div>
