@@ -28,7 +28,7 @@ export const Register = () => {
       }
 
       axios
-        .post('http://localhost:5555/auth/register', newUser)
+        .post('https://admissions-3x9g.onrender.com/auth/register', newUser)
         .then(()=>{
             alert('User added successfully!') 
             navigate('/') 
