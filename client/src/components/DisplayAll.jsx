@@ -237,7 +237,7 @@ const DisplayAll = () => {
             <div className='grid grid-cols-1 sm:grid-cols-2 mx-3 gap-3 md:hidden'>
                 {
                     filteredApplicants.map((applicant, index)=>(
-                        <div className="bg-gray-50 p-4 shadow-md rounded-lg">
+                        <div className="bg-green-100 p-4 shadow-md rounded-lg">
                             <div className='flex justify-between items-center space-x-2 text-sm border-b border-gray-200 my-1'>
                             <div className='text-gray-600'>{applicant.applicationNumber}</div>
                                 <div className='text-gray-600 font-bold'>{applicant.applicantName}</div>
