@@ -57,7 +57,7 @@ const EditApplicant = () => {
 
         // Update backend
         axios
-            .put(`http://localhost:5555/applicants/${id}`, updatedApplicant)
+            .put(`https://admissions-3x9g.onrender.com/applicants/${id}`, updatedApplicant)
             .then(() => {
                 alert('Applicant updated successfully!');
                 navigate('/view-all');
@@ -70,7 +70,7 @@ const EditApplicant = () => {
 
    useEffect(()=>{
     axios
-        .get(`http://localhost:5555/applicants/${id}`)
+        .get(`https://admissions-3x9g.onrender.com/applicants/${id}`)
         .then((response) => {
             console.log('Fetched applicant:', response.data);
             setApplicant(response.data);
