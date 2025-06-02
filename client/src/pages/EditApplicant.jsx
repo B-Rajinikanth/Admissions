@@ -27,7 +27,8 @@ const EditApplicant = () => {
         else if (interMarks >= 660) interWeight = 40;
         else if (interMarks >= 520) interWeight = 20;
 
-        if (eapcetRank >= 1 && eapcetRank <= 8000) eapcetWeight = 100;
+        if(eapcetRank == 0) eapcetWeight = 0
+        else if (eapcetRank >= 1 && eapcetRank <= 8000) eapcetWeight = 100;
         else if (eapcetRank <= 25000) eapcetWeight = 80;
         else if (eapcetRank <= 50000) eapcetWeight = 60;
         else if (eapcetRank <= 90000) eapcetWeight = 40;
@@ -48,6 +49,7 @@ const EditApplicant = () => {
         else if (meritScore >= 43.64) fee = 290000;
         else if (meritScore >= 27.82) fee = 350000;
         else if (meritScore >= 13.0) fee = 400000;
+        else  fee = 450000
 
         // Final object to update
         const updatedApplicant = {
