@@ -13,7 +13,7 @@ export const Login = () => {
   const navigate = useNavigate()
 
   const handleSubmit = async () => {
-    const res = await axios.post('http://localhost:5555/auth/login', credentials);
+    const res = await axios.post('https://admissions-3x9g.onrender.com/auth/login', credentials);
     localStorage.setItem('token', res.data.token);
     console.log(res.data.token)
     navigate('/view-all');

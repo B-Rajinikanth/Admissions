@@ -24,11 +24,11 @@ const DisplayAll = () => {
                 const sortedApplicants = response.data.applicants.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
                 setAllApplicants(sortedApplicants);
                 setFilteredApplicants(sortedApplicants);
-          })
-          .catch((error)=> {
-              alert('Not Data received!')
-              console.log(error)
-          }) 
+            })
+            .catch((error)=> {
+                alert('Not Data received!')
+                console.log(error)
+            }) 
       }, []);
 
     useEffect(() => {
@@ -40,7 +40,7 @@ const DisplayAll = () => {
 
         if (!token) return;
 
-        axios.get('http://localhost:5555/auth/profile', {
+        axios.get('https://admissions-3x9g.onrender.com/auth/profile', {
         headers: {
             Authorization: `Bearer ${token}`,
         },
