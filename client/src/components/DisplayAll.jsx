@@ -19,7 +19,7 @@ const DisplayAll = () => {
 
     useEffect(()=> {
         axios
-          .get('http://localhost:5555/applicants')
+          .get('https://admissions-3x9g.onrender.com/applicants')
           .then((response)=> {
                 const sortedApplicants = response.data.applicants.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
                 setAllApplicants(sortedApplicants);
@@ -55,7 +55,7 @@ const DisplayAll = () => {
         if (!window.confirm('Are you sure you want to delete this applicant?')) return;
       
         axios
-          .delete(`http://localhost:5555/applicants/${id}`)
+          .delete(`https://admissions-3x9g.onrender.com/applicants/${id}`)
           .then(() => {
             alert('Applicant deleted successfully!');
             // Refresh the list after deletion (refetch or filter)
