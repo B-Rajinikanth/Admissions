@@ -12,8 +12,6 @@ router.delete('/:id', deleteApplicant) // D ---> Delete
 router.post('/register', register);
 router.post('/login', login);
 
-router.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
-});
+
 
 export default router;
