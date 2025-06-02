@@ -31,12 +31,15 @@ const EntryForm = () => {
         }
 
         axios
-            .post('http://localhost:5555/applicants', newApplicant)
+            .post('https://admissions-3x9g.onrender.com/applicants', newApplicant)
             .then(()=>{
                 alert('Applicant added successfully!') 
                 navigate('/view-all') 
             })
-            .catch((error)=>{ console.error(`Server Error: ${error.message}`) })
+            .catch((error)=>{ 
+                alert(`Server Error: ${error.message}`)
+                console.error(`Server Error: ${error.message}`) 
+            })
     }
 
   return (
