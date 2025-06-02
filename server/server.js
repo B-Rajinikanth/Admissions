@@ -12,6 +12,11 @@ dotenv.config()
 const app = express()
 
 app.use(express.json())
+
+// Allow requests from your frontend domain
+app.use(cors({
+  origin: 'https://admissions-frontend-b7na.onrender.com'
+}));
 app.use(cors());
 app.use('/applicants', applicantRoutes)
 app.use('/auth', authRoutes)
